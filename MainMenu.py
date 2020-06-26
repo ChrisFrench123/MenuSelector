@@ -1,55 +1,49 @@
 from pynput import keyboard
-from os import system, name
-
+from os import system
 
 CurrentLine = 0
 
+MenuLines = "line 0", "line 1", "line 2", "line 3", "line 4", "line 5", "line 6"
 
-MenuLines = "line 0" , "line 1" , "line 2" , "line 3" , "line 4" , "line 5", "line 6"
+MaxLine = len(MenuLines) - 1
+NoOfLines = len(MenuLines)
 
-MaxLines = len(MenuLines) - 1
 
 def on_press(key):
-    #print(key, "pressed")
-    currentKey = key
-    MoveSelector(currentKey)
+    current_key = key
+    move_selector(current_key)
+
 
 def on_release(key):
-    #print(key , "released")
     if key == keyboard.Key.esc:
         # Stop listener
         return False
 
 
-def MoveSelector(currentKey):
+def move_selector(current_key):
     global CurrentLine
-    global MaxLines
-    if str(currentKey) == "Key.down" and CurrentLine < MaxLines:
-        CurrentLine  += 1
-        #print(CurrentLine)
+    global MaxLine
+    if str(current_key) == "Key.down" and CurrentLine < MaxLine:
+        CurrentLine += 1
 
-    if str(currentKey) == "Key.up" and CurrentLine > 0:
-        CurrentLine  -= 1
-        #print(CurrentLine)
+    if str(current_key) == "Key.up" and CurrentLine > 0:
+        CurrentLine -= 1
 
-    DrawMenu(CurrentLine, MaxLines)
+    draw_menu()
 
 
-def DrawMenu(CurrentLine, Maxlines):
+def draw_menu():
     print("\n" * 10)
-    print(CurrentLine)
     system('cls')
 
-
-
-    for i in range (len(MenuLines)):
+    for i in range(NoOfLines):
         if CurrentLine == i:
             print("[", MenuLines[i], "]")
         else:
             print(MenuLines[i])
 
 
-DrawMenu(CurrentLine, MaxLines)
+draw_menu()
 
 
 # Collect events until released
@@ -57,6 +51,3 @@ with keyboard.Listener(
         on_press=on_press,
         on_release=on_release) as listener:
     listener.join()
-
-
-end = input("hi")

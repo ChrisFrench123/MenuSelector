@@ -2,7 +2,7 @@ from pynput import keyboard
 from os import system, name
 
 
-CurrentLine = 2
+CurrentLine = 3
 MaxLines = 6
 
 MenuLines = "line 1" , "line 2" , "line 3" , "line 4" , "line 5" , "line 6"

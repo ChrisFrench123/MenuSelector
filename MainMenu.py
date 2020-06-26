@@ -1,12 +1,13 @@
 from pynput import keyboard
 from os import system, name
 
-#here is some stuff as a test on github
 
-CurrentLine = 1
-MaxLines = 6
+CurrentLine = 0
 
-MenuLines = "line 1" , "line 2" , "line 3" , "line 4" , "line 5" , "line 6"
+
+MenuLines = "line 0" , "line 1" , "line 2" , "line 3" , "line 4" , "line 5", "line 6"
+
+MaxLines = len(MenuLines) - 1
 
 def on_press(key):
     #print(key, "pressed")
@@ -27,7 +28,7 @@ def MoveSelector(currentKey):
         CurrentLine  += 1
         #print(CurrentLine)
 
-    if str(currentKey) == "Key.up" and CurrentLine > 1:
+    if str(currentKey) == "Key.up" and CurrentLine > 0:
         CurrentLine  -= 1
         #print(CurrentLine)
 
@@ -35,15 +36,20 @@ def MoveSelector(currentKey):
 
 
 def DrawMenu(CurrentLine, Maxlines):
-    #print("\n" * 100)
+    print("\n" * 10)
+    print(CurrentLine)
     system('cls')
-    OneLessThanCurrentLine = CurrentLine - 1
-    TheRest = MaxLines - CurrentLine
 
-    for i in range(OneLessThanCurrentLine):
-        print("line")
-    print("[line]")
-    print("line \n" * TheRest)
+
+
+    for i in range (len(MenuLines)):
+        if CurrentLine == i:
+            print("[", MenuLines[i], "]")
+        else:
+            print(MenuLines[i])
+
+
+DrawMenu(CurrentLine, MaxLines)
 
 
 # Collect events until released
@@ -53,3 +59,4 @@ with keyboard.Listener(
     listener.join()
 
 
+end = input("hi")

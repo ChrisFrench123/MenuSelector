@@ -3,15 +3,20 @@ from os import system
 
 CurrentLine = 0
 
-MenuLines = "line 0", "line 1", "line 2", "line 3", "line 4", "line 5", "line 6"
+FirstMenu = "line 0", "line 1", "line 2", "line 3", "line 4", "line 5", "line 6"
+SecondMenu = "line 7", "line 8", "line 9", "line 10", "line 11", "line 12", "line 13"
+CurrentMenu = SecondMenu
 
-MaxLine = len(MenuLines) - 1
-NoOfLines = len(MenuLines)
+MaxLine = len(CurrentMenu) - 1
+NoOfLines = len(CurrentMenu)
 
 
 def on_press(key):
     current_key = key
-    move_selector(current_key)
+    if str(current_key) == "Key.down" or str(current_key)== "Key.up":
+        move_selector(current_key)
+    elif str(current_key) == "Key.enter":
+        select_line()
 
 
 def on_release(key):
@@ -32,15 +37,25 @@ def move_selector(current_key):
     draw_menu()
 
 
+def select_line():
+    global CurrentMenu
+    print("current line is ", CurrentLine, "and line name is ", CurrentMenu[CurrentLine])
+    if CurrentMenu[CurrentLine] == "line 7":
+        CurrentMenu = FirstMenu
+        print("it is now the first menu")
+        draw_menu()
+
+
 def draw_menu():
     print("\n" * 10)
     system('cls')
 
     for i in range(NoOfLines):
         if CurrentLine == i:
-            print("[", MenuLines[i], "]")
+            print("[", CurrentMenu[i], "]")
+
         else:
-            print(MenuLines[i])
+            print(CurrentMenu[i])
 
 
 draw_menu()
